@@ -57,7 +57,7 @@
 | `docs/ARCHITECTURE.md` | 시스템 구조와 데이터 흐름 |
 | `docs/DEPLOYMENT.md` | 배포 체크리스트 |
 | `docs/PERFORMANCE_REPORT.md` | 성능 측정 결과와 개선 내역 |
-| `docs/EXPECTED_QUESTIONS.md` | 발표 예상 질문과 답변 |
-| `docs/PRESENTATION.md` | 시연 흐름과 발표 요약 |
+| `docs/EXPECTED_QUESTIONS.md` | 시연 예상 질문과 답변 |
+| `docs/PRESENTATION.md` | 시연 흐름과 서비스 요약 |
 | `docs/ui-review/` | 최신 시연 화면 스크린샷 |
 

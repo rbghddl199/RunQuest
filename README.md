@@ -1,285 +1,185 @@
-# 학습한 내용
+# RunQuest
 
-이번 프로젝트를 진행하며 Vue와 Django REST Framework를 활용한 웹 서비스 개발 과정을 학습하였다.
+사용자의 설문, 러닝 기록, 현재 위치를 바탕으로 오늘 달리기 좋은 대전 러닝 코스를 추천하고, 러닝 기록을 배지와 커뮤니티로 이어주는 AI 기반 러닝 추천 서비스입니다.
 
-프론트엔드에서는 Vue3, Pinia, Vue Router를 사용하여 화면 구성과 상태 관리를 구현하였으며, 백엔드에서는 Django REST Framework를 활용하여 RESTful API를 설계하고 개발하였다.
+Vue 3 + Django REST Framework로 개발했으며, Capacitor로 안드로이드 앱 빌드까지 지원합니다.
 
-AI 기능 구현을 위해 GMS를 통한 OpenAI GPT API를 활용하였으며, 사용자의 설문 결과와 러닝 기록을 기반으로 추천 결과를 생성하는 과정을 학습하였다.
+## 주요 기능
 
-데이터베이스 설계 과정에서는 ERD 작성과 모델링을 수행하며 데이터 간 관계를 설계하는 방법을 익힐 수 있었다.
+| 기능 | 설명 |
+| --- | --- |
+| AI 코스 추천 | 설문 결과와 최근 20회 러닝 기록을 점수화해 사용자 상태(신규·기존·복귀)에 맞는 코스를 추천하고, 추천 이유를 자연어로 함께 제공 |
+| AI 챗봇 | "야경이 좋은 3km 코스 알려줘"처럼 자연어로 조건을 말하면 조건에 맞는 코스를 추천 |
+| GPS 러닝 기록 | 위치 동의 후 실시간 경로·거리·페이스를 측정해 저장. 시뮬레이션 모드도 제공 |
+| 러닝 피드백 | 이전 기록과 비교한 페이스·거리 변화를 AI가 짧은 문장으로 피드백 |
+| 코스 관리 | 코스 북마크, 지도에서 직접 그리기, GPX 파일 가져오기 |
+| 커뮤니티 | 게시글·댓글·좋아요·북마크, 코스 연동 |
+| 배지·출석 | 러닝 목표 달성에 따른 배지 획득, 출석 캘린더 |
+| 날씨·미세먼지 | 현재 위치 기준 날씨와 미세먼지 정보를 러닝 시작 화면에 표시 |
 
-또한 Capacitor를 이용하여 웹 애플리케이션을 앱(시연용)으로 변환하는 과정을 경험하였고, GPS 기능과 카카오맵 API를 연동하여 위치 기반 서비스를 구현하였다.
+## 추천 알고리즘
 
-# 어려웠던 부분
-
-가장 어려웠던 부분은 프론트엔드와 백엔드의 연동 과정이었다.
-
-또한 GPS 기능을 구현하면서 실제 위치 데이터를 받아오는 과정과 지도에 경로를 표시하는 과정이 예상보다 복잡하다는 것을 알게 되었다.
-
-AI 추천 기능 역시 단순히 GPT를 호출하는 것이 아니라, 사용자의 데이터를 점수화하고 추천 결과를 생성하는 로직을 설계하는 과정이 어려웠다.
-
-추가적으로 웹 환경에서는 정상적으로 동작하던 기능이 앱 환경에서는 동작하지 않는 문제가 발생하였으며, CORS 설정과 네트워크 연결 문제를 해결하는 과정에서 많은 시행착오를 겪었다.
-
-# 느낀 점
-
-이번 프로젝트를 통해 단순히 기능을 구현하는 것뿐만 아니라 전체 서비스를 설계하는 경험을 할 수 있었다.
-
-특히 프론트엔드, 백엔드, 데이터베이스, AI API를 모두 연동하면서 서비스가 동작하는 전체 흐름을 이해할 수 있었다.
-
-문제가 발생했을 때 원인을 찾고 해결하는 과정에서 개발 역량이 향상되었으며, 실제 서비스를 운영하기 위해서는 배포와 서버 운영에 대한 추가 학습이 필요하다는 점도 느낄 수 있었다.
-
-또한 팀 프로젝트를 진행하며 기획과 역할 분담의 중요성을 체감할 수 있었다.
-
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-# 팀원 정보 및 분담 내역
-
-1. 최상진(리더)
-- Frontend 개발(Vue)
-- AI 기능 구현, 추천 알고리즘 설계
-
-2. 조규홍
-- Backend 개발(Django)
-- 데이터 수집, API 관리
-
-
-# 목표 서비스 및 실제 구현 정도
-
-1. 목표
-
-사용자의 취향과 러닝 기록을 기반으로 산책 및 러닝 코스를 AI를 통해 추천하고, 기록 관리와 커뮤니티 기능을 제공하는 서비스 개발
-
-2. 실제 구현
-
-- 완료
-
-회원가입 및 로그인
-설문 기반 코스 추천
-GPT 기반 추천 설명 생성
-GPS 위치 측정
-실제 코스 데이터와 합성 데이터를 이용한 데이터 구축
-러닝 기록 저장
-커뮤니티 게시글 작성
-댓글 및 좋아요
-배지 시스템
-
-- 미구현 또는 개선 예정
-
-클라우드 배포
-유저 데이터 축적
-추천 알고리즘 고도화
-실시간 위치 추적 기능 강화
-안드로이드 앱 변환
-
-
-# 데이터 베이스 모델링 (ERD)
-
-1. ERD 구성
-
-- User
-
-회원 정보를 저장하는 테이블
-
-회원 ID
-이메일
-비밀번호
-닉네임
-가입일
-
-- SurveyResponse
-
-사용자 취향 설문 결과를 저장하는 테이블
-
-선호 거리
-선호 난이도
-선호 러닝 환경
-
-AI 코스 추천 시 활용
-
-- Course
-
-대전 산책 및 러닝 코스 정보를 저장하는 테이블
-
-코스명
-지역
-거리
-난이도
-설명
-경로 정보
-대표 이미지
-
-- RunningRecord
-
-사용자의 러닝 기록을 저장하는 테이블
-
-사용자
-코스
-이동 거리
-소요 시간
-평균 페이스
-운동 완료 시각
-
-- AiFeedback
-
-AI가 생성한 러닝 피드백을 저장하는 테이블
-
-예시
-
-오늘은 이전 기록보다 평균 페이스가 향상되었습니다.
-최근 평균 거리보다 더 긴 거리를 완주했습니다.
-
-- CommunityPost
-
-커뮤니티 게시글 정보를 저장하는 테이블
-
-작성자
-관련 코스
-제목
-내용
-카테고리
-작성일
-
-- CommunityComment
-
-게시글 댓글 정보를 저장하는 테이블
-
-게시글
-작성자
-댓글 내용
-작성일
-
-2. ERD 관계 설명
-
-User 1 : N SurveyResponse
-
-User 1 : N RunningRecord
-
-Course 1 : N RunningRecord
-
-RunningRecord 1 : N AiFeedback
-
-User 1 : N CommunityPost
-
-Course 1 : N CommunityPost
-
-CommunityPost 1 : N CommunityComment
-
-User 1 : N CommunityComment
-
-
-# 추천 알고리즘에 대한 기술적 설명
-
-기존 러닝 앱은 모든 사용자에게 비슷한 코스를 보여주거나, 초보자와 복귀 러너의 상태를 충분히 반영하지 못하는 문제가 있다. RunQuest는 러너를 신규, 기존, 복귀 사용자로 나누고 각 상태에 맞는 추천 방식을 적용한다.
+기존 러닝 앱은 모든 사용자에게 비슷한 코스를 보여주거나, 초보자와 복귀 러너의 상태를 충분히 반영하지 못하는 경우가 많습니다. RunQuest는 러너를 세 상태로 나누고 각 상태에 맞는 추천 방식을 적용합니다.
 
 | 사용자 상태 | 추천 방식 |
 | --- | --- |
-| 신규 사용자 | 러닝 기록이 없으므로 설문 기반으로 추천 / 설문에는 러닝 경력, 러닝 페이스 등의 정보를 받고 이를 점수화 하여 AI기반 추천에 반영  |
-| 기존 사용자 | 설문과 최근 20회 러닝 기록을 함께 반영 / 신규와는 다르게 위치정보도 반영됨 |
-| 복귀 사용자 | 최근 30일 이상 완료 기록이 없는 사용자에 해당/ 설문과 과거 기록을 합한 점수에 안전 보정을 추가 |
+| 신규 사용자 | 러닝 기록이 없으므로 설문(러닝 경력, 페이스, 선호 환경 등)을 점수화해 추천 |
+| 기존 사용자 | 설문과 최근 20회 러닝 기록을 함께 반영하고, 현재 위치도 반영 |
+| 복귀 사용자 | 최근 30일 이상 완료 기록이 없는 사용자. 설문과 과거 기록을 합한 점수에 안전 보정을 추가 |
 
-추천된 결과는 GPT API를 이용하여 자연어 형태의 추천 설명을 추가적으로 생성한다.
+핵심 코스 랭킹은 설명 가능한 규칙 기반 점수화로 결정하고, 생성형 AI는 추천 이유 설명·챗봇 응답·러닝 피드백 문구 생성에 사용합니다. 외부 LLM 키가 없으면 로컬 규칙 기반 응답으로 자동 대체됩니다.
 
+## 기술 스택
 
-# 핵심 기능에 대한 설명
+| 영역 | 사용 기술 |
+| --- | --- |
+| Frontend | Vue 3, Pinia, Vue Router, Vite, Axios, Lucide Icons |
+| Mobile | Capacitor (Android) |
+| Backend | Django, Django REST Framework, SimpleJWT, drf-spectacular |
+| Database | SQLite (개발), PostgreSQL 전환 가능 |
+| 외부 API | Kakao Map JavaScript SDK, Kakao Local REST API, OpenWeather API, OpenAI 호환 Chat Completions API |
+| 배포 | Docker, docker-compose, Nginx, Gunicorn, WhiteNoise |
 
-1. AI 코스 추천
+## 아키텍처
 
-기본적으로 설문 결과와 러닝 기록을 기반으로 사용자에게 적합한 코스를 추천한다.
+```
+Vue 3 SPA / Capacitor App
+        │  REST (JWT)
+        ▼
+Django REST Framework ──▶ 추천 엔진 (규칙 기반 점수화)
+        │                 ├─▶ LLM (추천 이유·챗봇·피드백 문구)
+        │                 ├─▶ OpenWeather (날씨·미세먼지)
+        │                 └─▶ Kakao Local (주소·장소)
+        ▼
+     SQLite / PostgreSQL
+```
 
-추가로 챗봇을 통해 더욱 세부적인 조건을 추가하면 보다 사용자에게 맞는 코스를 추천한다.
+상세 내용은 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/ERD.md](docs/ERD.md), [docs/API_SPEC.md](docs/API_SPEC.md)를 참고하세요.
 
-2. GPS 기반 기록 측정
+## 데이터 모델
 
-사용자의 현재 위치를 동의 하에 수집하여 러닝 시작 후, 기록 측정을 시작하고 그 기록을 저장한다.
+- **User / UserSettings**: 회원 정보와 알림·단위 설정
+- **SurveyResponse**: 선호 거리·난이도·러닝 환경 등 설문 결과
+- **Course / CustomCourse / FavoriteCourse**: 대전 러닝 코스(GPX 기반 경로 포함), 사용자가 직접 만든 코스, 북마크
+- **RunningRecord**: 이동 거리, 소요 시간, 평균 페이스, 경로, AI 피드백
+- **RecommendationSession**: 추천 요청과 결과 이력
+- **Badge / UserBadge / Attendance**: 배지와 출석
+- **CommunityPost / CommunityComment / Like / Bookmark**: 커뮤니티
+- **ChatSession / ChatMessage**: 챗봇 대화 이력
+- **Notification**: 알림
 
-3. 커뮤니티
+## 실행 방법
 
-게시글 작성, 댓글, 좋아요 기능을 통해 사용자 간 정보를 공유할 수 있다.
+### 1. 환경 변수
 
-4. 배지 시스템
+```bash
+cp .env.example .env
+cp frontend/.env.example frontend/.env
+```
 
-러닝 목표 달성 여부에 따라 다양한 배지를 획득하여 지속적인 동기부여를 준다.
+`.env`에 다음 값을 채웁니다. 외부 API 키가 없어도 기본 기능은 동작합니다.
 
-5. 마이페이지
+| 변수 | 설명 |
+| --- | --- |
+| `DJANGO_SECRET_KEY` | Django 시크릿 키 |
+| `VITE_KAKAO_MAP_APP_KEY` | Kakao Map JavaScript 키 (지도 표시) |
+| `KAKAO_REST_API_KEY` | Kakao Local REST 키 (주소 검색) |
+| `OPENWEATHER_API_KEY` | 날씨·미세먼지 |
+| `OPENAI_API_KEY` / `LLM_KEY` | 생성형 AI 피드백·챗봇 (없으면 로컬 규칙 기반으로 동작) |
 
-개인 기록, 활동 내역, 설정 등을 관리할 수 있다.
+### 2. Backend
 
+```bash
+cd backend
+python -m venv .venv
+.venv/Scripts/activate      # Windows
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py load_runquest_fixtures --reset   # 시연 데이터
+python manage.py runserver
+```
 
-# 생성형 AI를 활용한 부분
+### 3. Frontend
 
-1. AI 맞춤 추천 코스
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-사용자의 설문 결과와 최근 20회의 러닝 기록을 바탕으로 AI가 개인 맞춤형 코스를 추천하는 기능
+`http://localhost:5173`에서 확인할 수 있습니다.
 
-사용자가 선호하는 거리, 난이도, 러닝 환경 등의 설문 정보와 실제 러닝 기록 데이터를 함께 분석하여 현재 사용자에게 가장 적합한 코스를 선정
+### 4. Docker
 
-또한 AI는 단순히 코스를 추천하는 것뿐만 아니라 추천 이유도 함께 제공하여 사용자가 추천 결과를 쉽게 이해할 수 있도록 하였다.
+```bash
+docker compose up --build
+```
 
-- 활용 데이터
+### 5. Android 앱
 
-사용자 설문 결과
-최근 20회 러닝 기록
-대전 산책·러닝 코스 데이터
+```bash
+cd frontend
+npm run build
+npx cap sync android
+npx cap open android
+```
 
-- AI 역할
+## 실행 화면
 
-사용자 성향 분석
-코스 적합도 평가
-추천 코스 및 추천 이유 생성
+`실행화면/` 폴더에 주요 화면 캡처가 있습니다.
 
-2. AI 챗봇을 이용한 코스 추천
+| 메인 | AI 추천 | 러닝 기록 | 커뮤니티 |
+| --- | --- | --- | --- |
+| ![메인](실행화면/메인페이지.png) | ![AI 추천](실행화면/AI%20추천%20페이지.png) | ![러닝 기록](실행화면/러닝%20기록%20중.png) | ![커뮤니티](실행화면/커뮤니티.png) |
 
-기본 추천 결과가 사용자의 취향과 맞지 않을 경우, AI 챗봇과 대화를 통해 보다 구체적인 조건의 코스를 추천받을 수 있는 기능
+## 테스트
 
-예를 들어 사용자가
+```bash
+cd backend
+python manage.py test core
+```
 
-"오늘은 야경이 좋은 코스를 추천해줘"
+## 팀
 
-또는
+| 이름 | 역할 |
+| --- | --- |
+| 최상진 | Frontend(Vue), AI 기능 구현, 추천 알고리즘 설계 |
+| 조규홍 | Backend(Django), 데이터 수집·구축, API 관리 |
 
-"3km 정도의 짧은 산책 코스를 알려줘"
+## 향후 계획
 
-와 같이 자연어로 요청하면 AI가 사용자의 요구사항을 해석하여 적절한 코스를 추천한다.
+- 클라우드 배포 (현재는 로컬 실행 및 ngrok 기반 시연)
+- 실제 사용자 데이터 축적에 따른 추천 알고리즘 고도화
+- 실시간 위치 추적 안정화
+- 안드로이드 앱 배포
 
-이를 통해 사용자는 정해진 추천 결과 외에도 자신의 상황과 목적에 맞는 코스를 자유롭게 탐색할 수 있다.
+## 출처 및 라이선스
 
-- AI 역할
+이 프로젝트의 소스 코드는 [MIT License](LICENSE)로 공개합니다.
 
-자연어 질의 이해
-사용자 요구사항 분석
-맞춤형 코스 추천 및 설명 제공
+### 사용 라이브러리
 
-3. 러닝 피드백
+| 라이브러리 | 라이선스 |
+| --- | --- |
+| [Vue](https://github.com/vuejs/core), [Pinia](https://github.com/vuejs/pinia), [Vue Router](https://github.com/vuejs/router), [Vite](https://github.com/vitejs/vite) | MIT |
+| [Axios](https://github.com/axios/axios), [Capacitor](https://github.com/ionic-team/capacitor) | MIT |
+| [Lucide Icons](https://github.com/lucide-icons/lucide) | ISC |
+| [Django](https://github.com/django/django), [Django REST Framework](https://github.com/encode/django-rest-framework), [drf-spectacular](https://github.com/tfranzel/drf-spectacular), [python-dotenv](https://github.com/theskumar/python-dotenv) | BSD-3-Clause |
+| [djangorestframework-simplejwt](https://github.com/jazzband/djangorestframework-simplejwt), [django-cors-headers](https://github.com/adamchainz/django-cors-headers), [WhiteNoise](https://github.com/evansd/whitenoise), [Gunicorn](https://github.com/benoitc/gunicorn) | MIT |
+| [Requests](https://github.com/psf/requests) | Apache-2.0 |
+| [openai-python](https://github.com/openai/openai-python) | Apache-2.0 |
+| [Noto Sans KR](https://fonts.google.com/noto/specimen/Noto+Sans+KR) | SIL Open Font License 1.1 |
 
-러닝이 종료되면 기록 데이터를 바탕으로 AI가 간단한 피드백을 제공하는 기능
+### 외부 API
 
-사용자의 이전 러닝 기록과 비교하여 페이스, 거리, 운동량 등의 변화를 분석하고 이를 이해하기 쉬운 문장으로 전달
+- [Kakao Maps API](https://apis.map.kakao.com/) — 지도 표시와 경로 렌더링. 지도 화면의 Kakao 로고는 Kakao Maps 이용약관에 따라 유지합니다.
+- [Kakao Local API](https://developers.kakao.com/docs/latest/ko/local/common) — 주소·장소 검색
+- [OpenWeather API](https://openweathermap.org/api) — 날씨와 대기질
+- [OpenAI API](https://platform.openai.com/) — 추천 이유, 챗봇 응답, 러닝 피드백 문구 생성 (OpenAI 호환 엔드포인트 사용 가능)
 
-예를 들어,
+### 이미지 및 데이터
 
-"오늘은 지난 러닝보다 평균 페이스가 20초 빨라졌어요."
-
-"최근 러닝 거리보다 1.2km 더 오래 달렸네요!"
-
-와 같은 피드백을 제공하여 사용자가 자신의 운동 성과를 쉽게 확인할 수 있도록 하였다.
-
-단순한 기록 저장 기능을 넘어 사용자의 꾸준한 러닝 동기를 높이는 것을 목표로 구현하였다.
-
-- AI 역할
-
-러닝 기록 분석
-이전 기록과 비교
-개인 맞춤형 피드백 생성
-
-
-# 기타 포함 시키고 싶은 내용
-
-웹사이트에서 구현 후 앱에서도의 구현을 위한 시연에 도전했다.
-
-앱 환경에서는 실제 배포 대신 시연 목적으로 ngrok을 사용하였다.
-
-현재 백엔드 서버는 개발자의 PC에서 실행되며, ngrok을 통해 외부 네트워크에서 접속 가능하도록 구성하였다.
-
-또한 Vue로 개발한 웹 서비스를 Capacitor를 이용하여 안드로이드 앱으로 변환하여 실제 스마트폰 환경에서 동작하는 모습을 구현하였다.
-
-향후에는 AWS와 같은 클라우드 환경에 배포하여 실제 서비스 형태로 운영하는 것을 목표로 하고 있다.
+- 코스 사진, 커뮤니티 게시글 사진, 프로필 아바타, 배지 프레임, 히어로 일러스트는 모두 팀에서 생성형 AI(OpenAI 이미지 생성)로 직접 제작했거나 직접 그린 이미지입니다. 실제 인물 사진은 포함되어 있지 않습니다.
+- 코스 경로 데이터는 팀에서 준비한 GPX 파일과 직접 설계한 좌표를 기반으로 구축했습니다.
+- 시연용 사용자·게시글·기록 데이터(`backend/fixtures/`)는 팀에서 직접 설계한 합성 데이터입니다.
+- `실행화면/`의 캡처 이미지에 포함된 지도 타일은 Kakao Maps의 저작물입니다.
