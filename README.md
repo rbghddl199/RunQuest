@@ -1,10 +1,4 @@
-# RunQuest
-
-사용자의 설문, 러닝 기록, 현재 위치를 바탕으로 오늘 달리기 좋은 대전 러닝 코스를 추천하고, 러닝 기록을 배지와 커뮤니티로 이어주는 AI 기반 러닝 추천 서비스입니다.
-
-Vue 3 + Django REST Framework로 개발했으며, Capacitor로 안드로이드 앱 빌드까지 지원합니다.
-
-## 📍 프로젝트 소개
+# 🏃 RunQuest — AI 기반 맞춤형 러닝 코스 추천 서비스
 
 ![프로젝트 소개](docs/readme/01-intro.png)
 
@@ -14,182 +8,129 @@ Vue 3 + Django REST Framework로 개발했으며, Capacitor로 안드로이드 �
 
 ![실행 화면](docs/readme/04-screens.png)
 
-## 기능 상세
+## 05. 담당 역할
 
-| 기능 | 설명 |
+### 조규홍 — Backend / 데이터 관리
+
+- Django REST Framework 기반 REST API 개발
+- 회원 및 러닝 기록 관련 데이터 처리
+- 사용자 설문, 코스, 커뮤니티 데이터 관리
+- 데이터베이스 ERD 설계 및 모델링
+- 프론트엔드와 백엔드 API 연동
+- GPS 기록 및 AI 추천 기능의 서버 연동 지원
+
+### 최상진 — Frontend / AI
+
+- Vue 3 기반 UI 및 프론트엔드 개발
+- AI 추천 알고리즘 설계
+- GPT API 기반 추천 및 피드백 기능 구현
+
+## 06. 기술 스택 및 선정 이유
+
+| 기술 | 선정 이유 |
 | --- | --- |
-| AI 코스 추천 | 설문 결과와 최근 20회 러닝 기록을 점수화해 사용자 상태(신규·기존·복귀)에 맞는 코스를 추천하고, 추천 이유를 자연어로 함께 제공 |
-| AI 챗봇 | "야경이 좋은 3km 코스 알려줘"처럼 자연어로 조건을 말하면 조건에 맞는 코스를 추천 |
-| GPS 러닝 기록 | 위치 동의 후 실시간 경로·거리·페이스를 측정해 저장. 시뮬레이션 모드도 제공 |
-| 러닝 피드백 | 이전 기록과 비교한 페이스·거리 변화를 AI가 짧은 문장으로 피드백 |
-| 코스 관리 | 코스 북마크, 지도에서 직접 그리기, GPX 파일 가져오기 |
-| 커뮤니티 | 게시글·댓글·좋아요·북마크, 코스 연동 |
-| 배지·출석 | 러닝 목표 달성에 따른 배지 획득, 출석 캘린더 |
-| 날씨·미세먼지 | 현재 위치 기준 날씨와 미세먼지 정보를 러닝 시작 화면에 표시 |
+| Vue 3 / Pinia | 컴포넌트 기반 UI 개발 및 상태 관리 |
+| Django REST Framework | Python 기반 REST API 개발과 데이터 모델 관리 |
+| OpenAI GPT API (GMS) | 추천 설명과 러닝 피드백의 자연어 생성 |
+| Kakao Maps API | 지도 시각화 및 위치 기반 서비스 구현 |
+| Capacitor | 기존 Vue 웹 서비스를 모바일 앱으로 전환 |
+| ngrok | 로컬 서버의 외부 접속 및 모바일 시연 환경 구성 |
 
-## 추천 알고리즘
+## 07. 기술 구현 정보
 
-기존 러닝 앱은 모든 사용자에게 비슷한 코스를 보여주거나, 초보자와 복귀 러너의 상태를 충분히 반영하지 못하는 경우가 많습니다. RunQuest는 러너를 세 상태로 나누고 각 상태에 맞는 추천 방식을 적용합니다.
+### 1) 개인 맞춤형 추천 알고리즘
 
-| 사용자 상태 | 추천 방식 |
+사용자를 신규, 기존, 복귀 사용자로 분류하고 상태별 추천 기준을 적용했습니다.
+
+| 구분 | 추천 기준 |
 | --- | --- |
-| 신규 사용자 | 러닝 기록이 없으므로 설문(러닝 경력, 페이스, 선호 환경 등)을 점수화해 추천 |
-| 기존 사용자 | 설문과 최근 20회 러닝 기록을 함께 반영하고, 현재 위치도 반영 |
-| 복귀 사용자 | 최근 30일 이상 완료 기록이 없는 사용자. 설문과 과거 기록을 합한 점수에 안전 보정을 추가 |
+| 신규 | 설문 결과 점수화 |
+| 기존 | 설문 + 최근 20회 기록 + 위치정보 |
+| 복귀 | 설문 + 과거 기록 + 안전 보정 |
 
-핵심 코스 랭킹은 설명 가능한 규칙 기반 점수화로 결정하고, 생성형 AI는 추천 이유 설명·챗봇 응답·러닝 피드백 문구 생성에 사용합니다. 외부 LLM 키가 없으면 로컬 규칙 기반 응답으로 자동 대체됩니다.
+추천 로직을 통해 적합한 코스를 선정하고, GPT API를 활용해 추천 이유를 자연어로 생성했습니다.
 
-## 기술 스택
+### 2) REST API 및 데이터베이스
 
-| 영역 | 사용 기술 |
-| --- | --- |
-| Frontend | Vue 3, Pinia, Vue Router, Vite, Axios, Lucide Icons |
-| Mobile | Capacitor (Android) |
-| Backend | Django, Django REST Framework, SimpleJWT, drf-spectacular |
-| Database | SQLite (개발), PostgreSQL 전환 가능 |
-| 외부 API | Kakao Map JavaScript SDK, Kakao Local REST API, OpenWeather API, OpenAI 호환 Chat Completions API |
-| 배포 | Docker, docker-compose, Nginx, Gunicorn, WhiteNoise |
+Django REST Framework를 이용하여 사용자, 러닝 기록, 코스, 커뮤니티 데이터를 관리하는 API를 개발했습니다.
 
-## 아키텍처
+주요 데이터 모델은 다음과 같습니다.
 
-```
-Vue 3 SPA / Capacitor App
-        │  REST (JWT)
-        ▼
-Django REST Framework ──▶ 추천 엔진 (규칙 기반 점수화)
-        │                 ├─▶ LLM (추천 이유·챗봇·피드백 문구)
-        │                 ├─▶ OpenWeather (날씨·미세먼지)
-        │                 └─▶ Kakao Local (주소·장소)
-        ▼
-     SQLite / PostgreSQL
-```
+- **User / SurveyResponse**: 사용자 및 운동 성향
+- **Course / RunningRecord**: 코스 정보 및 운동 기록
+- **RunningRecord.ai_feedback**: 운동 결과에 대한 AI 피드백
+- **CommunityPost / CommunityComment**: 커뮤니티 활동
 
-상세 내용은 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/ERD.md](docs/ERD.md), [docs/API_SPEC.md](docs/API_SPEC.md)를 참고하세요.
+ERD를 통해 사용자와 러닝 기록, 코스 및 게시글 간의 관계를 정의했습니다.
 
-## 데이터 모델
-
-- **User / UserSettings**: 회원 정보와 알림·단위 설정
-- **SurveyResponse**: 선호 거리·난이도·러닝 환경 등 설문 결과
-- **Course / CustomCourse / FavoriteCourse**: 대전 러닝 코스(GPX 기반 경로 포함), 사용자가 직접 만든 코스, 북마크
-- **RunningRecord**: 이동 거리, 소요 시간, 평균 페이스, 경로, AI 피드백
-- **RecommendationSession**: 추천 요청과 결과 이력
-- **Badge / UserBadge / Attendance**: 배지와 출석
-- **CommunityPost / CommunityComment / Like / Bookmark**: 커뮤니티
-- **ChatSession / ChatMessage**: 챗봇 대화 이력
-- **Notification**: 알림
-
-## 실행 방법
-
-### 1. 환경 변수
-
-```bash
-cp .env.example .env
-cp frontend/.env.example frontend/.env
+```mermaid
+erDiagram
+    USER ||--|| SURVEY_RESPONSE : "설문"
+    USER ||--o{ RUNNING_RECORD : "기록"
+    COURSE ||--o{ RUNNING_RECORD : "코스"
+    USER ||--o{ FAVORITE_COURSE : "북마크"
+    COURSE ||--o{ FAVORITE_COURSE : ""
+    USER ||--o{ USER_BADGE : "획득"
+    BADGE ||--o{ USER_BADGE : ""
+    USER ||--o{ COMMUNITY_POST : "작성"
+    COURSE |o--o{ COMMUNITY_POST : "연결 코스"
+    RUNNING_RECORD |o--o{ COMMUNITY_POST : "연결 기록"
+    COMMUNITY_POST ||--o{ COMMUNITY_COMMENT : "댓글"
+    USER ||--o{ COMMUNITY_COMMENT : "작성"
+    USER ||--o{ RECOMMENDATION_SESSION : "추천 요청"
+    RECOMMENDATION_SESSION ||--o{ RECOMMENDATION_ITEM : "추천 결과"
+    COURSE ||--o{ RECOMMENDATION_ITEM : ""
 ```
 
-`.env`에 다음 값을 채웁니다. 외부 API 키가 없어도 기본 기능은 동작합니다.
+전체 ERD와 필드 정의는 [docs/ERD.md](docs/ERD.md)에서 확인할 수 있습니다.
 
-| 변수 | 설명 |
-| --- | --- |
-| `DJANGO_SECRET_KEY` | Django 시크릿 키 |
-| `VITE_KAKAO_MAP_APP_KEY` | Kakao Map JavaScript 키 (지도 표시) |
-| `KAKAO_REST_API_KEY` | Kakao Local REST 키 (주소 검색) |
-| `OPENWEATHER_API_KEY` | 날씨·미세먼지 |
-| `OPENAI_API_KEY` / `LLM_KEY` | 생성형 AI 피드백·챗봇 (없으면 로컬 규칙 기반으로 동작) |
+### 3) 웹·모바일 연동
 
-### 2. Backend
+Vue 웹 서비스를 Capacitor를 통해 Android 앱 형태로 변환했습니다.
 
-```bash
-cd backend
-python -m venv .venv
-.venv/Scripts/activate      # Windows
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py load_runquest_fixtures --reset   # 시연 데이터
-python manage.py runserver
-```
+개발 PC에서 실행하는 Django 서버를 ngrok으로 외부에 연결하여 실제 스마트폰에서도 기능을 시연했습니다.
 
-### 3. Frontend
+단, 클라우드 배포 및 정식 앱 배포까지 진행하지는 않았습니다.
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## 08. 트러블슈팅
 
-`http://localhost:5173`에서 확인할 수 있습니다.
+### 1) Frontend–Backend API 연동 문제
 
-### 4. Docker
+- **문제**: 프론트엔드와 백엔드 간 API 통신 과정에서 정상적으로 데이터를 주고받지 못하는 상황이 발생했습니다.
+- **분석 및 해결 과정**: API 요청·응답 구조와 CORS 설정을 점검하고, 프론트엔드와 백엔드의 연결 환경을 조정했습니다.
+- **배운 점**: API의 기능 구현뿐 아니라 클라이언트와 서버의 요청 형식, 응답 구조, 네트워크 환경을 함께 고려해야 한다는 점을 학습했습니다.
 
-```bash
-docker compose up --build
-```
+### 2) 웹과 모바일 앱의 실행 환경 차이
 
-### 5. Android 앱
+- **문제**: 웹에서 동작하던 기능이 Android 앱 환경에서는 정상적으로 작동하지 않았습니다.
+- **분석 및 해결 과정**: 로컬 서버 접근 방식과 네트워크 설정을 확인하고, ngrok을 활용하여 외부 네트워크에서도 개발 서버에 접근할 수 있는 시연 환경을 구성했습니다.
+- **배운 점**: 웹과 앱의 네트워크 환경 차이를 이해하고 배포 환경을 고려한 서버 설계의 필요성을 체감했습니다.
 
-```bash
-cd frontend
-npm run build
-npx cap sync android
-npx cap open android
-```
+## 09. 학습 내용 및 회고
 
-## 실행 화면
+### 학습한 내용
 
-`실행화면/` 폴더에 주요 화면 캡처가 있습니다.
+- Django REST Framework를 활용한 REST API 개발
+- Vue 3 프론트엔드와 백엔드 간 데이터 연동
+- ERD 모델링 및 관계형 데이터 설계
+- GPT API를 활용한 AI 기능 연동 구조 이해
+- GPS, Kakao Maps API 및 Capacitor를 활용한 서비스 구현 경험
 
-| 메인 | AI 추천 | 러닝 기록 | 커뮤니티 |
-| --- | --- | --- | --- |
-| ![메인](실행화면/메인페이지.png) | ![AI 추천](실행화면/AI%20추천%20페이지.png) | ![러닝 기록](실행화면/러닝%20기록%20중.png) | ![커뮤니티](실행화면/커뮤니티.png) |
+### 회고
 
-## 테스트
+이번 프로젝트를 통해 웹 서비스의 기획부터 데이터베이스 설계, API 개발, 프론트엔드 연동까지 전체 개발 흐름을 경험했습니다.
 
-```bash
-cd backend
-python manage.py test core
-```
+특히 API 연동과 모바일 시연 환경에서 발생한 문제를 해결하며 기능 개발뿐 아니라 시스템 간 연결과 실행 환경에 대한 이해가 중요하다는 점을 배웠습니다.
 
-## 팀
+## 10. 출처 및 라이선스
 
-| 이름 | 역할 |
-| --- | --- |
-| 최상진 | Frontend(Vue), AI 기능 구현, 추천 알고리즘 설계 |
-| 조규홍 | Backend(Django), 데이터 수집·구축, API 관리 |
+### 참고 자료 및 외부 서비스
 
-## 향후 계획
+- [Kakao Maps API](https://developers.kakao.com/docs/ko/kakaomap/common) — 지도 및 위치 기반 기능
+- [OpenAI API](https://developers.openai.com/api/docs) — AI 추천 설명 및 피드백 생성 (GMS 경유)
+- 코스 데이터 및 이미지 — 코스 경로는 팀에서 준비한 GPX 파일과 직접 설계한 좌표로 구축했고, 코스·게시글 사진과 일러스트는 생성형 AI로 직접 제작했습니다. 실행 화면 캡처의 지도 타일은 Kakao Maps의 저작물입니다.
 
-- 클라우드 배포 (현재는 로컬 실행 및 ngrok 기반 시연)
-- 실제 사용자 데이터 축적에 따른 추천 알고리즘 고도화
-- 실시간 위치 추적 안정화
-- 안드로이드 앱 배포
+### 라이선스
 
-## 출처 및 라이선스
-
-이 프로젝트의 소스 코드는 [MIT License](LICENSE)로 공개합니다.
-
-### 사용 라이브러리
-
-| 라이브러리 | 라이선스 |
-| --- | --- |
-| [Vue](https://github.com/vuejs/core), [Pinia](https://github.com/vuejs/pinia), [Vue Router](https://github.com/vuejs/router), [Vite](https://github.com/vitejs/vite) | MIT |
-| [Axios](https://github.com/axios/axios), [Capacitor](https://github.com/ionic-team/capacitor) | MIT |
-| [Lucide Icons](https://github.com/lucide-icons/lucide) | ISC |
-| [Django](https://github.com/django/django), [Django REST Framework](https://github.com/encode/django-rest-framework), [drf-spectacular](https://github.com/tfranzel/drf-spectacular), [python-dotenv](https://github.com/theskumar/python-dotenv) | BSD-3-Clause |
-| [djangorestframework-simplejwt](https://github.com/jazzband/djangorestframework-simplejwt), [django-cors-headers](https://github.com/adamchainz/django-cors-headers), [WhiteNoise](https://github.com/evansd/whitenoise), [Gunicorn](https://github.com/benoitc/gunicorn) | MIT |
-| [Requests](https://github.com/psf/requests) | Apache-2.0 |
-| [openai-python](https://github.com/openai/openai-python) | Apache-2.0 |
-| [Noto Sans KR](https://fonts.google.com/noto/specimen/Noto+Sans+KR) | SIL Open Font License 1.1 |
-
-### 외부 API
-
-- [Kakao Maps API](https://apis.map.kakao.com/) — 지도 표시와 경로 렌더링. 지도 화면의 Kakao 로고는 Kakao Maps 이용약관에 따라 유지합니다.
-- [Kakao Local API](https://developers.kakao.com/docs/latest/ko/local/common) — 주소·장소 검색
-- [OpenWeather API](https://openweathermap.org/api) — 날씨와 대기질
-- [OpenAI API](https://platform.openai.com/) — 추천 이유, 챗봇 응답, 러닝 피드백 문구 생성 (OpenAI 호환 엔드포인트 사용 가능)
-
-### 이미지 및 데이터
-
-- 코스 사진, 커뮤니티 게시글 사진, 프로필 아바타, 배지 프레임, 히어로 일러스트는 모두 팀에서 생성형 AI(OpenAI 이미지 생성)로 직접 제작했거나 직접 그린 이미지입니다. 실제 인물 사진은 포함되어 있지 않습니다.
-- 코스 경로 데이터는 팀에서 준비한 GPX 파일과 직접 설계한 좌표를 기반으로 구축했습니다.
-- 시연용 사용자·게시글·기록 데이터(`backend/fixtures/`)는 팀에서 직접 설계한 합성 데이터입니다.
-- `실행화면/`의 캡처 이미지에 포함된 지도 타일은 Kakao Maps의 저작물입니다.
+본 프로젝트는 교육 및 포트폴리오 목적으로 제작되었습니다.
+현재 별도의 오픈소스 라이선스를 적용하지 않았습니다.

@@ -28,7 +28,7 @@
     -webkit-font-smoothing: antialiased;
   }
   .slide { display: none; width: 1600px; height: 640px; }
-  .slide.tall { height: 720px; }
+  .slide.tall { height: 760px; }
   body[data-show="all"] .slide { display: flex; margin-bottom: 24px; }
   .slide.active { display: flex; }
 
@@ -205,12 +205,12 @@
   /* ---------- 01 프로젝트 소개 ---------- */
   .intro {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 28px;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 32px;
     flex: 1;
   }
   .lead {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.85;
     color: #374151;
   }
@@ -234,26 +234,39 @@
     border: 1.5px solid var(--line);
     color: var(--blue-800);
   }
-  .facts { display: grid; grid-template-rows: repeat(4, 1fr); gap: 12px; }
+  .facts {
+    background: #fff;
+    border-radius: 14px;
+    border-top: 4px solid var(--blue-800);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .06);
+    padding: 6px 26px;
+    align-self: start;
+  }
   .fact {
     display: flex;
     align-items: center;
     gap: 18px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 0 22px;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .05);
-    border-left: 4px solid var(--c, var(--blue-800));
+    padding: 15px 0;
   }
+  .fact + .fact { border-top: 1px solid #eef0f4; }
   .fact dt {
-    width: 86px;
+    width: 92px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 14px;
     font-weight: 800;
-    color: var(--c, var(--blue-800));
+    color: var(--muted);
   }
-  .fact dd { font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.45; }
-  .fact dd small { display: block; font-size: 13px; font-weight: 500; color: var(--muted); }
+  .fact dt::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+  .fact dd { font-size: 16px; font-weight: 700; color: var(--ink); }
+  .fact dd.hl { color: var(--blue-700); }
 
   /* ---------- 02 배경 및 문제점 ---------- */
   .problem {
@@ -285,7 +298,7 @@
     align-items: flex-start;
     background: #fff;
     border-radius: 12px;
-    padding: 16px 20px;
+    padding: 18px 20px;
     box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .05);
   }
   .row .tag {
@@ -297,35 +310,61 @@
     margin-top: 2px;
   }
   .row.bad .tag { color: #b91c1c; background: #fef2f2; }
+  .row.good { border: 1.5px solid #a7f3d0; }
   .row.good .tag { color: #047857; background: var(--green-bg); }
-  .row p { font-size: 16px; line-height: 1.55; color: #374151; }
+  .row p { font-size: 16px; line-height: 1.6; color: #374151; }
   .col-head {
     font-size: 17px;
     font-weight: 800;
     margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
   .col-head.bad { color: #b91c1c; }
-  .col-head.good { color: #047857; }
+  .col-head.good { color: var(--blue-800); }
+  .users { display: flex; flex-direction: column; gap: 12px; }
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 22px;
+    border-left: 5px solid var(--c);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .05);
+  }
+  .user .who {
+    flex-shrink: 0;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    font-weight: 900;
+    color: #fff;
+    background: var(--c);
+  }
+  .user h4 { font-size: 18px; font-weight: 800; color: var(--ink); }
+  .user p { margin-top: 4px; font-size: 15px; color: var(--muted); line-height: 1.5; }
+  .user p b { color: var(--c); }
+  .user.u1 { --c: var(--blue-500); }
+  .user.u2 { --c: var(--blue-800); }
+  .user.u3 { --c: var(--green); }
 
   /* ---------- 03 주요 기능 (첨부 이미지의 알약형 리스트) ---------- */
   .features {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 160px 160px;
-    gap: 24px 22px;
-    margin-top: 18px;
+    grid-template-rows: repeat(3, 112px);
+    gap: 18px 22px;
+    margin-top: 4px;
   }
   .pill {
     display: flex;
     align-items: center;
-    gap: 22px;
+    gap: 20px;
     background: #fff;
     border: 1.5px solid #dbe3f0;
     border-radius: 999px;
-    padding: 0 34px 0 18px;
+    padding: 0 34px 0 16px;
     box-shadow: 0 1px 2px rgba(15, 23, 42, .05), 0 8px 20px rgba(15, 23, 42, .05);
   }
   .pill .n {
@@ -334,68 +373,105 @@
     border-radius: 50%;
     display: grid;
     place-items: center;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 900;
     color: #fff;
     background: var(--c);
     box-shadow: 0 6px 14px color-mix(in srgb, var(--c) 35%, transparent);
   }
   .pill h4 {
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 800;
-    color: var(--ink);
+    color: var(--c);
     letter-spacing: -.5px;
   }
-  .pill h4 span { color: var(--c); }
   .pill p {
-    margin-top: 6px;
+    margin-top: 5px;
     font-size: 15px;
-    line-height: 1.55;
+    line-height: 1.5;
     color: var(--muted);
   }
   .pill.p1 { --c: var(--blue-700); }
-  .pill.p2 { --c: var(--green); }
-  .pill.p3 { --c: var(--blue-500); }
-  .pill.p4 { --c: var(--amber); }
+  .pill.p2 { --c: var(--blue-500); }
+  .pill.p3 { --c: var(--green); }
+  .pill.p4 { --c: #0d9488; }
+  .pill.p5 { --c: var(--amber); }
+  .pill.p6 { --c: #ea580c; }
 
   /* ---------- 04 실행 화면 ---------- */
-  .screens {
+  .groups {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 18px;
-    align-items: start;
   }
-  .shot { text-align: center; }
-  .shot .phone {
-    height: 384px;
-    border-radius: 22px;
-    padding: 6px;
+  .group {
+    display: flex;
+    flex-direction: column;
     background: #fff;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, .08), 0 10px 26px rgba(15, 23, 42, .12);
-    border-top: 4px solid var(--c, var(--blue-800));
+    border-radius: 14px;
+    border-top: 4px solid var(--c);
+    padding: 18px 16px 0;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .06);
+  }
+  .group h5 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -.4px;
+  }
+  .group h5 span { color: var(--c); margin-right: 4px; }
+  .group p {
+    margin-top: 6px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--muted);
+    min-height: 40px;
+  }
+  .group .badge {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 10%, #fff);
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .pair {
+    position: relative;
+    flex: 1;
+    margin-top: 14px;
+    background: color-mix(in srgb, var(--c) 7%, #fff);
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+  .phone {
+    position: absolute;
+    width: 150px;
+    height: 312px;
+    border-radius: 20px;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .1), 0 12px 28px rgba(15, 23, 42, .18);
     overflow: hidden;
   }
-  .shot .phone img {
+  .phone.dark { background: #0f172a; }
+  .phone img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top;
-    border-radius: 16px;
+    border-radius: 15px;
     display: block;
   }
-  .shot h5 {
-    margin-top: 14px;
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--ink);
-  }
-  .shot p {
-    margin-top: 4px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--muted);
-  }
+  .phone.a { left: 14px; top: 20px; }
+  .phone.b { right: 14px; top: 52px; }
+  .g1 { --c: var(--blue-700); }
+  .g2 { --c: var(--green); }
+  .g3 { --c: var(--blue-500); }
+  .g4 { --c: var(--amber-text); }
 </style>
 </head>
 <body>
@@ -405,7 +481,7 @@
   <aside class="side">
     <div class="num">01</div>
     <h2>프로젝트 소개</h2>
-    <p>어디서, 얼마나 달려야 할지<br>고민하는 러너를 위해<br>오늘 나에게 맞는 코스를<br>AI가 먼저 제안합니다.</p>
+    <p>어디서, 얼마나 달려야 할지<br>고민하는 사용자를 위해<br>나에게 맞는 코스를<br>AI가 먼저 제안합니다.</p>
     <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
     <div class="tagline">Run your quest!<small>오늘의 코스는 RunQuest가</small></div>
   </aside>
@@ -414,15 +490,16 @@
     <h1 class="title">AI 기반 <em>맞춤형 러닝 코스</em> 추천 서비스</h1>
     <div class="intro">
       <div class="lead">
-        <span class="big">RunQuest는 <span>설문 · 러닝 기록 · 현재 위치</span>를 바탕으로 오늘 달리기 좋은 대전 러닝 코스를 추천하는 서비스입니다.</span>
-        추천에서 끝나지 않고 <b>GPS 러닝 기록</b>, <b>AI 피드백</b>, <b>배지와 커뮤니티</b>까지 연결해 러닝을 꾸준한 습관으로 만드는 것을 목표로 개발했습니다.
-        <div class="keys"><span># 개인 맞춤 추천</span><span># 설명 가능한 AI</span><span># 러닝 습관 형성</span></div>
+        <span class="big">RunQuest는 사용자의 <span>취향과 러닝 기록</span>을 분석하여 개인에게 적합한 산책 및 러닝 코스를 추천하는 서비스입니다.</span>
+        사용자의 운동 경험과 활동 기록을 기반으로 <b>맞춤형 코스</b>를 추천하고, <b>GPS 기록 측정</b>과 <b>커뮤니티</b> 기능을 통해 지속적인 운동을 지원합니다.
+        <div class="keys"><span># 개인 맞춤 추천</span><span># GPS 러닝 기록</span><span># 지속적인 운동</span></div>
       </div>
       <dl class="facts">
-        <div class="fact c-blue"><dt>서비스</dt><dd>AI 맞춤형 러닝 코스 추천<small>대전 지역 러닝 코스 기반</small></dd></div>
-        <div class="fact c-green"><dt>플랫폼</dt><dd>Web SPA + Android 앱<small>Capacitor 기반 하이브리드 빌드</small></dd></div>
-        <div class="fact c-sky"><dt>기술</dt><dd>Vue 3 · Django REST Framework<small>Kakao Map · OpenWeather · LLM API</small></dd></div>
-        <div class="fact c-amber"><dt>팀</dt><dd>2인 프로젝트<small>최상진 (Frontend · AI) · 조규홍 (Backend · Data)</small></dd></div>
+        <div class="fact"><dt>프로젝트명</dt><dd class="hl">RunQuest</dd></div>
+        <div class="fact"><dt>개발 인원</dt><dd>2명</dd></div>
+        <div class="fact"><dt>담당 역할</dt><dd>Backend 개발 및 데이터 관리</dd></div>
+        <div class="fact"><dt>개발 환경</dt><dd>Vue 3 · Django REST Framework · GPT API</dd></div>
+        <div class="fact"><dt>플랫폼</dt><dd>Web / Android 시연용 앱</dd></div>
       </dl>
     </div>
   </div>
@@ -433,31 +510,29 @@
   <aside class="side">
     <div class="num">02</div>
     <h2>배경 및 문제점</h2>
-    <p>웰빙과 건강 관리를 위해<br>러닝 인구는 늘고 있지만<br>초보 러너는 여전히<br>코스 선택이 어렵습니다.</p>
+    <p>같은 추천 기준으로는<br>초보자와 복귀 사용자 모두를<br>만족시키기 어렵습니다.</p>
     <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
-    <div class="tagline">Why RunQuest?<small>기록은 많지만 추천은 부족하다</small></div>
+    <div class="tagline">Why RunQuest?<small>사용자마다 다른 출발선</small></div>
   </aside>
   <div class="main">
     <div class="header"><span class="logo"><i></i>RunQuest</span><span class="chip">02. 배경 및 문제점</span><span class="page">02 / 04</span></div>
-    <h1 class="title">기존 러닝 서비스의 <em>한계</em>와 해결 목표</h1>
+    <h1 class="title">사용자 상태에 따라 <em>추천 기준을 차별화</em>하다</h1>
     <div class="problem">
       <div>
-        <div class="col-head bad">기존 서비스의 한계</div>
+        <div class="col-head bad">기존 러닝 서비스의 한계</div>
         <div class="rows">
-          <div class="row bad"><span class="tag">선택</span><p>초보자는 <b>어디서 얼마나 달려야 할지</b> 스스로 결정하기 어렵습니다.</p></div>
-          <div class="row bad"><span class="tag">추천</span><p>기록 저장은 강하지만 <b>다음 코스 추천</b>은 약하고, 모두에게 비슷한 코스를 보여줍니다.</p></div>
-          <div class="row bad"><span class="tag">상태</span><p>날씨·위치·컨디션·과거 기록이 흩어져 있어 <b>사용자가 직접 판단</b>해야 합니다.</p></div>
-          <div class="row bad"><span class="tag">공유</span><p>러닝 후 기록을 <b>공유하거나 코스로 재사용</b>하는 흐름이 불편합니다.</p></div>
+          <div class="row bad"><span class="tag">문제 1</span><p>사용자 개개인의 <b>운동 능력과 활동 이력</b>을 충분히 반영하지 못하는 경우가 있습니다.</p></div>
+          <div class="row bad"><span class="tag">문제 2</span><p>특히 <b>초보자</b>와 장기간 운동을 중단한 <b>복귀 사용자</b>에게는 동일한 추천 기준을 적용하기 어렵습니다.</p></div>
+          <div class="row good"><span class="tag">기획</span><p>사용자 상태에 따라 추천 기준을 차별화하는 <b>개인 맞춤형 러닝 서비스</b>를 기획했습니다.</p></div>
         </div>
       </div>
       <div class="arrow"><span>→</span></div>
       <div>
-        <div class="col-head good">RunQuest의 해결 목표</div>
-        <div class="rows">
-          <div class="row good"><span class="tag">맞춤</span><p><b>신규 · 기존 · 복귀</b> 러너 상태별로 다른 기준을 적용해 코스를 추천합니다.</p></div>
-          <div class="row good"><span class="tag">근거</span><p>설문과 <b>최근 20회 러닝 기록</b>을 점수화하고, 추천 이유를 자연어로 설명합니다.</p></div>
-          <div class="row good"><span class="tag">통합</span><p><b>현재 위치와 날씨·미세먼지</b>를 한 화면에서 함께 반영합니다.</p></div>
-          <div class="row good"><span class="tag">연결</span><p>기록을 <b>내 코스·커뮤니티 게시글</b>로 바로 이어 재사용할 수 있게 합니다.</p></div>
+        <div class="col-head good">사용자 상태별 추천 기준</div>
+        <div class="users">
+          <div class="user u1"><div class="who">신규</div><div><h4>신규 사용자</h4><p><b>설문</b> 기반 코스 추천</p></div></div>
+          <div class="user u2"><div class="who">기존</div><div><h4>기존 사용자</h4><p><b>설문 + 최근 러닝 기록</b> 기반 추천</p></div></div>
+          <div class="user u3"><div class="who">복귀</div><div><h4>복귀 사용자</h4><p><b>과거 기록 + 안전 보정</b>을 반영한 추천</p></div></div>
         </div>
       </div>
     </div>
@@ -469,18 +544,20 @@
   <aside class="side">
     <div class="num">03</div>
     <h2>주요 기능</h2>
-    <p>추천부터 기록, 피드백,<br>공유까지<br>러닝의 처음과 끝을<br>하나의 흐름으로 잇습니다.</p>
+    <p>추천부터 기록, 피드백,<br>공유와 보상까지<br>러닝의 처음과 끝을<br>하나의 흐름으로 잇습니다.</p>
     <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
     <div class="tagline">All in one run<small>추천 → 러닝 → 기록 → 공유</small></div>
   </aside>
   <div class="main">
     <div class="header"><span class="logo"><i></i>RunQuest</span><span class="chip">03. 주요 기능</span><span class="page">03 / 04</span></div>
-    <h1 class="title">RunQuest의 <em>핵심 기능</em> 4가지</h1>
+    <h1 class="title">RunQuest의 <em>핵심 기능</em> 6가지</h1>
     <div class="features">
-      <div class="pill p1"><div class="n">1</div><div><h4><span>AI 코스 추천</span> &amp; 챗봇</h4><p>설문 + 최근 러닝 기록을 점수화해 추천하고,<br>"야경 좋은 3km 코스" 같은 자연어 요청에도 답합니다.</p></div></div>
-      <div class="pill p2"><div class="n">2</div><div><h4><span>GPS</span> 실시간 러닝</h4><p>위치 동의 후 경로 · 거리 · 페이스를 실시간 측정하고<br>Kakao Map 위에 이동 경로를 그립니다.</p></div></div>
-      <div class="pill p3"><div class="n">3</div><div><h4><span>기록 관리</span> &amp; AI 피드백</h4><p>이전 기록과 비교한 페이스 · 거리 변화를 AI가 피드백하고,<br>북마크 · 직접 그리기 · GPX로 내 코스를 관리합니다.</p></div></div>
-      <div class="pill p4"><div class="n">4</div><div><h4><span>커뮤니티</span> &amp; 배지</h4><p>코스 · 기록을 연결한 게시글, 댓글, 좋아요를 지원하고<br>배지와 출석 캘린더로 러닝 습관을 만듭니다.</p></div></div>
+      <div class="pill p1"><div class="n">1</div><div><h4>AI 맞춤 코스 추천</h4><p>설문 및 최근 20회 기록 기반 추천과<br>GPT 추천 설명 생성</p></div></div>
+      <div class="pill p2"><div class="n">2</div><div><h4>AI 챗봇</h4><p>자연어로 세부 조건을 입력하여<br>코스 탐색</p></div></div>
+      <div class="pill p3"><div class="n">3</div><div><h4>GPS 러닝 기록</h4><p>위치 기반 이동 거리 및<br>러닝 활동 기록</p></div></div>
+      <div class="pill p4"><div class="n">4</div><div><h4>AI 러닝 피드백</h4><p>이전 기록과 비교한<br>개인별 운동 피드백</p></div></div>
+      <div class="pill p5"><div class="n">5</div><div><h4>커뮤니티</h4><p>게시글, 댓글, 좋아요를 통한<br>정보 공유</p></div></div>
+      <div class="pill p6"><div class="n">6</div><div><h4>배지 시스템</h4><p>운동 목표 달성에 따른<br>보상 제공</p></div></div>
     </div>
   </div>
 </section>
@@ -492,22 +569,47 @@
     <h2>실행 화면</h2>
     <p>실제 구현된 화면으로<br>추천 → 러닝 → 기록 → 공유<br>흐름을 확인할 수 있습니다.</p>
     <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
-    <div class="tagline">Live Demo<small>Web · Android 동일 UI</small></div>
+    <div class="tagline">Live Demo<small>Web · Android 시연</small></div>
   </aside>
   <div class="main">
     <div class="header"><span class="logo"><i></i>RunQuest</span><span class="chip">04. 실행 화면</span><span class="page">04 / 04</span></div>
     <h1 class="title">RunQuest <em>서비스 화면</em></h1>
-    <div class="screens">
-      <div class="shot c-blue"><div class="phone"><img src="../../실행화면/메인페이지.png" alt=""></div><h5>메인</h5><p>오늘의 날씨 · 요약<br>추천 코스 미리보기</p></div>
-      <div class="shot c-green"><div class="phone"><img src="../../실행화면/AI 추천 페이지.png" alt=""></div><h5>AI 코스 추천</h5><p>상태별 맞춤 코스와<br>추천 이유 제공</p></div>
-      <div class="shot c-sky"><div class="phone"><img src="../../실행화면/AI 챗봇 추천.png" alt=""></div><h5>AI 챗봇</h5><p>자연어 조건으로<br>대화형 코스 추천</p></div>
-      <div class="shot c-blue"><div class="phone"><img src="../../실행화면/러닝 기록 중.png" alt=""></div><h5>GPS 러닝</h5><p>실시간 경로 · 거리<br>페이스 측정</p></div>
-      <div class="shot c-green"><div class="phone"><img src="../../실행화면/기록 저장 및 러닝 피드백.jpg" alt=""></div><h5>기록 · 피드백</h5><p>러닝 결과 저장과<br>AI 피드백</p></div>
-      <div class="shot c-amber"><div class="phone"><img src="../../실행화면/커뮤니티.png" alt=""></div><h5>커뮤니티</h5><p>코스 · 기록 연동<br>게시글과 댓글</p></div>
+    <div class="groups">
+      <div class="group g1">
+        <h5><span>①</span>메인 및 코스 추천</h5>
+        <p>설문과 러닝 기록을 반영한<br>추천 코스 및 추천 이유 제공</p>
+        <div class="pair">
+          <div class="phone a"><img src="../../실행화면/메인페이지.png" alt=""></div>
+          <div class="phone b"><img src="../../실행화면/AI 추천 페이지.png" alt=""></div>
+        </div>
+      </div>
+      <div class="group g2">
+        <h5><span>②</span>GPS 러닝 기록</h5>
+        <p>지도 기반 러닝 경로 확인 및<br>운동 기록 저장</p>
+        <div class="pair">
+          <div class="phone a"><img src="../../실행화면/러닝 기록 시작.png" alt=""></div>
+          <div class="phone b dark"><img src="../../실행화면/기록 저장 및 러닝 피드백.jpg" alt=""></div>
+        </div>
+      </div>
+      <div class="group g3">
+        <h5><span>③</span>커뮤니티 및 마이페이지</h5>
+        <p>사용자 간 정보 공유와<br>개인 활동 기록 관리</p>
+        <div class="pair">
+          <div class="phone a"><img src="../../실행화면/커뮤니티.png" alt=""></div>
+          <div class="phone b"><img src="../../실행화면/마이페이지.png" alt=""></div>
+        </div>
+      </div>
+      <div class="group g4">
+        <h5><span>④</span>Android 시연 화면</h5>
+        <p>Capacitor와 ngrok을 활용한<br>실제 스마트폰 환경 시연</p>
+        <div class="pair">
+          <div class="phone a dark"><img src="../../실행화면/시작페이지.png" alt=""></div>
+          <div class="phone b dark"><img src="../../실행화면/러닝 기록 중.png" alt=""></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
 <script>
   const id = location.hash.slice(1);
   if (id) document.getElementById(id).classList.add('active');
