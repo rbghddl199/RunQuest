@@ -4,7 +4,17 @@
 
 Vue 3 + Django REST Framework로 개발했으며, Capacitor로 안드로이드 앱 빌드까지 지원합니다.
 
-## 주요 기능
+## 📍 프로젝트 소개
+
+![프로젝트 소개](docs/readme/01-intro.png)
+
+![배경 및 문제점](docs/readme/02-background.png)
+
+![주요 기능](docs/readme/03-features.png)
+
+![실행 화면](docs/readme/04-screens.png)
+
+## 기능 상세
 
 | 기능 | 설명 |
 | --- | --- |

@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>RunQuest README Slides</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    --blue-900: #1e3a8a;
+    --blue-800: #1e40af;
+    --blue-700: #1d4ed8;
+    --blue-500: #3b82f6;
+    --green: #10b981;
+    --green-bg: #ecfdf5;
+    --amber: #f59e0b;
+    --amber-text: #d97706;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --bg: #fafbfc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; }
+  body {
+    font-family: "Pretendard", "Malgun Gothic", sans-serif;
+    color: var(--ink);
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  .slide { display: none; width: 1600px; height: 640px; }
+  .slide.tall { height: 720px; }
+  body[data-show="all"] .slide { display: flex; margin-bottom: 24px; }
+  .slide.active { display: flex; }
+
+  /* ---------- 왼쪽 패널 ---------- */
+  .side {
+    position: relative;
+    width: 440px;
+    flex-shrink: 0;
+    overflow: hidden;
+    color: #fff;
+    padding: 64px 48px 0 56px;
+    background: linear-gradient(160deg, var(--blue-700) 0%, var(--blue-800) 45%, #0f9f8a 85%, var(--green) 100%);
+  }
+  .side::after {
+    content: "";
+    position: absolute;
+    right: -1px; top: 0; bottom: 0;
+    width: 70px;
+    background: var(--bg);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+  .side .num {
+    font-size: 132px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -6px;
+    color: rgba(255, 255, 255, .16);
+  }
+  .side h2 {
+    margin-top: -56px;
+    margin-left: 6px;
+    font-size: 46px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+  }
+  .side p {
+    margin-top: 28px;
+    margin-left: 8px;
+    font-size: 17px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, .86);
+    max-width: 300px;
+  }
+  .side .mascot {
+    position: absolute;
+    left: 50px;
+    bottom: 40px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, .35), 0 0 0 6px rgba(255, 255, 255, .14);
+  }
+  .side .mascot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.07);
+  }
+  .side .tagline {
+    position: absolute;
+    left: 220px;
+    bottom: 92px;
+    font-size: 20px;
+    font-weight: 800;
+    font-style: italic;
+    color: rgba(255, 255, 255, .9);
+    letter-spacing: -.3px;
+  }
+  .side .tagline small {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    font-style: normal;
+    color: rgba(255, 255, 255, .62);
+    margin-top: 4px;
+  }
+
+  /* ---------- 오른쪽 본문 ---------- */
+  .main {
+    flex: 1;
+    background: var(--bg);
+    padding: 44px 64px 40px 48px;
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 18px;
+    border-bottom: 1.5px solid var(--line);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 21px;
+    font-weight: 900;
+    color: var(--blue-700);
+    letter-spacing: -.6px;
+  }
+  .logo i {
+    display: inline-block;
+    width: 9px;
+    height: 22px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--blue-500), var(--blue-800));
+    transform: skewX(-18deg);
+  }
+  .chip {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    background: var(--green-bg);
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .page {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue-800);
+  }
+  .title {
+    margin: 26px 0 26px;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .title em { font-style: normal; color: var(--blue-700); }
+  b { font-weight: 800; color: var(--ink); }
+
+  /* 카드 (PDF의 상단 컬러 라인 카드) */
+  .card {
+    position: relative;
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px 26px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .06);
+    border-top: 4px solid var(--c, var(--blue-800));
+  }
+  .card h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--c, var(--blue-800));
+    margin-bottom: 14px;
+  }
+  .card ul { list-style: none; }
+  .card li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #374151;
+  }
+  .card li + li { margin-top: 8px; }
+  .card li::before {
+    content: "";
+    position: absolute;
+    left: 2px; top: 10px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+  .c-blue { --c: var(--blue-800); }
+  .c-sky { --c: var(--blue-500); }
+  .c-green { --c: var(--green); }
+  .c-amber { --c: var(--amber-text); border-top-color: var(--amber); }
+
+  /* ---------- 01 프로젝트 소개 ---------- */
+  .intro {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 28px;
+    flex: 1;
+  }
+  .lead {
+    font-size: 19px;
+    line-height: 1.85;
+    color: #374151;
+  }
+  .lead .big {
+    display: block;
+    font-size: 23px;
+    line-height: 1.6;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 18px;
+    letter-spacing: -.4px;
+  }
+  .lead .big span { color: var(--blue-700); }
+  .lead .keys { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .lead .keys span {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    color: var(--blue-800);
+  }
+  .facts { display: grid; grid-template-rows: repeat(4, 1fr); gap: 12px; }
+  .fact {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 0 22px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .05);
+    border-left: 4px solid var(--c, var(--blue-800));
+  }
+  .fact dt {
+    width: 86px;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--c, var(--blue-800));
+  }
+  .fact dd { font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.45; }
+  .fact dd small { display: block; font-size: 13px; font-weight: 500; color: var(--muted); }
+
+  /* ---------- 02 배경 및 문제점 ---------- */
+  .problem {
+    display: grid;
+    grid-template-columns: 1fr 64px 1fr;
+    align-items: stretch;
+    flex: 1;
+  }
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .arrow span {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--blue-700), var(--green));
+    color: #fff;
+    font-size: 22px;
+    font-weight: 900;
+    box-shadow: 0 6px 16px rgba(29, 78, 216, .3);
+  }
+  .rows { display: flex; flex-direction: column; gap: 12px; }
+  .row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 6px 18px rgba(15, 23, 42, .05);
+  }
+  .row .tag {
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 2px;
+  }
+  .row.bad .tag { color: #b91c1c; background: #fef2f2; }
+  .row.good .tag { color: #047857; background: var(--green-bg); }
+  .row p { font-size: 16px; line-height: 1.55; color: #374151; }
+  .col-head {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .col-head.bad { color: #b91c1c; }
+  .col-head.good { color: #047857; }
+
+  /* ---------- 03 주요 기능 (첨부 이미지의 알약형 리스트) ---------- */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 160px 160px;
+    gap: 24px 22px;
+    margin-top: 18px;
+  }
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    background: #fff;
+    border: 1.5px solid #dbe3f0;
+    border-radius: 999px;
+    padding: 0 34px 0 18px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .05), 0 8px 20px rgba(15, 23, 42, .05);
+  }
+  .pill .n {
+    flex-shrink: 0;
+    width: 76px; height: 76px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    background: var(--c);
+    box-shadow: 0 6px 14px color-mix(in srgb, var(--c) 35%, transparent);
+  }
+  .pill h4 {
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -.5px;
+  }
+  .pill h4 span { color: var(--c); }
+  .pill p {
+    margin-top: 6px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .pill.p1 { --c: var(--blue-700); }
+  .pill.p2 { --c: var(--green); }
+  .pill.p3 { --c: var(--blue-500); }
+  .pill.p4 { --c: var(--amber); }
+
+  /* ---------- 04 실행 화면 ---------- */
+  .screens {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+    align-items: start;
+  }
+  .shot { text-align: center; }
+  .shot .phone {
+    height: 384px;
+    border-radius: 22px;
+    padding: 6px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .08), 0 10px 26px rgba(15, 23, 42, .12);
+    border-top: 4px solid var(--c, var(--blue-800));
+    overflow: hidden;
+  }
+  .shot .phone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 16px;
+    display: block;
+  }
+  .shot h5 {
+    margin-top: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .shot p {
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- 01 프로젝트 소개 -->
+<section class="slide" id="s1">
+  <aside class="side">
+    <div class="num">01</div>
+    <h2>프로젝트 소개</h2>
+    <p>어디서, 얼마나 달려야 할지<br>고민하는 러너를 위해<br>오늘 나에게 맞는 코스를<br>AI가 먼저 제안합니다.</p>
+    <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
+    <div class="tagline">Run your quest!<small>오늘의 코스는 RunQuest가</small></div>
+  </aside>
+  <div class="main">
+    <div class="header"><span class="logo"><i></i>RunQuest</span><span class="chip">01. 프로젝트 소개</span><span class="page">01 / 04</span></div>
+    <h1 class="title">AI 기반 <em>맞춤형 러닝 코스</em> 추천 서비스</h1>
+    <div class="intro">
+      <div class="lead">
+        <span class="big">RunQuest는 <span>설문 · 러닝 기록 · 현재 위치</span>를 바탕으로 오늘 달리기 좋은 대전 러닝 코스를 추천하는 서비스입니다.</span>
+        추천에서 끝나지 않고 <b>GPS 러닝 기록</b>, <b>AI 피드백</b>, <b>배지와 커뮤니티</b>까지 연결해 러닝을 꾸준한 습관으로 만드는 것을 목표로 개발했습니다.
+        <div class="keys"><span># 개인 맞춤 추천</span><span># 설명 가능한 AI</span><span># 러닝 습관 형성</span></div>
+      </div>
+      <dl class="facts">
+        <div class="fact c-blue"><dt>서비스</dt><dd>AI 맞춤형 러닝 코스 추천<small>대전 지역 러닝 코스 기반</small></dd></div>
+        <div class="fact c-green"><dt>플랫폼</dt><dd>Web SPA + Android 앱<small>Capacitor 기반 하이브리드 빌드</small></dd></div>
+        <div class="fact c-sky"><dt>기술</dt><dd>Vue 3 · Django REST Framework<small>Kakao Map · OpenWeather · LLM API</small></dd></div>
+        <div class="fact c-amber"><dt>팀</dt><dd>2인 프로젝트<small>최상진 (Frontend · AI) · 조규홍 (Backend · Data)</small></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 02 배경 및 문제점 -->
+<section class="slide" id="s2">
+  <aside class="side">
+    <div class="num">02</div>
+    <h2>배경 및 문제점</h2>
+    <p>웰빙과 건강 관리를 위해<br>러닝 인구는 늘고 있지만<br>초보 러너는 여전히<br>코스 선택이 어렵습니다.</p>
+    <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
+    <div class="tagline">Why RunQuest?<small>기록은 많지만 추천은 부족하다</small></div>
+  </aside>
+  <div class="main">
+    <div class="header"><span class="logo"><i></i>RunQuest</span><span class="chip">02. 배경 및 문제점</span><span class="page">02 / 04</span></div>
+    <h1 class="title">기존 러닝 서비스의 <em>한계</em>와 해결 목표</h1>
+    <div class="problem">
+      <div>
+        <div class="col-head bad">기존 서비스의 한계</div>
+        <div class="rows">
+          <div class="row bad"><span class="tag">선택</span><p>초보자는 <b>어디서 얼마나 달려야 할지</b> 스스로 결정하기 어렵습니다.</p></div>
+          <div class="row bad"><span class="tag">추천</span><p>기록 저장은 강하지만 <b>다음 코스 추천</b>은 약하고, 모두에게 비슷한 코스를 보여줍니다.</p></div>
+          <div class="row bad"><span class="tag">상태</span><p>날씨·위치·컨디션·과거 기록이 흩어져 있어 <b>사용자가 직접 판단</b>해야 합니다.</p></div>
+          <div class="row bad"><span class="tag">공유</span><p>러닝 후 기록을 <b>공유하거나 코스로 재사용</b>하는 흐름이 불편합니다.</p></div>
+        </div>
+      </div>
+      <div class="arrow"><span>→</span></div>
+      <div>
+        <div class="col-head good">RunQuest의 해결 목표</div>
+        <div class="rows">
+          <div class="row good"><span class="tag">맞춤</span><p><b>신규 · 기존 · 복귀</b> 러너 상태별로 다른 기준을 적용해 코스를 추천합니다.</p></div>
+          <div class="row good"><span class="tag">근거</span><p>설문과 <b>최근 20회 러닝 기록</b>을 점수화하고, 추천 이유를 자연어로 설명합니다.</p></div>
+          <div class="row good"><span class="tag">통합</span><p><b>현재 위치와 날씨·미세먼지</b>를 한 화면에서 함께 반영합니다.</p></div>
+          <div class="row good"><span class="tag">연결</span><p>기록을 <b>내 코스·커뮤니티 게시글</b>로 바로 이어 재사용할 수 있게 합니다.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 주요 기능 -->
+<section class="slide" id="s3">
+  <aside class="side">
+    <div class="num">03</div>
+    <h2>주요 기능</h2>
+    <p>추천부터 기록, 피드백,<br>공유까지<br>러닝의 처음과 끝을<br>하나의 흐름으로 잇습니다.</p>
+    <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
+    <div class="tagline">All in one run<small>추천 → 러닝 → 기록 → 공유</small></div>
+  </aside>
+  <div class="main">
+    <div class="header"><span class="logo"><i></i>RunQuest</span><span class="chip">03. 주요 기능</span><span class="page">03 / 04</span></div>
+    <h1 class="title">RunQuest의 <em>핵심 기능</em> 4가지</h1>
+    <div class="features">
+      <div class="pill p1"><div class="n">1</div><div><h4><span>AI 코스 추천</span> &amp; 챗봇</h4><p>설문 + 최근 러닝 기록을 점수화해 추천하고,<br>"야경 좋은 3km 코스" 같은 자연어 요청에도 답합니다.</p></div></div>
+      <div class="pill p2"><div class="n">2</div><div><h4><span>GPS</span> 실시간 러닝</h4><p>위치 동의 후 경로 · 거리 · 페이스를 실시간 측정하고<br>Kakao Map 위에 이동 경로를 그립니다.</p></div></div>
+      <div class="pill p3"><div class="n">3</div><div><h4><span>기록 관리</span> &amp; AI 피드백</h4><p>이전 기록과 비교한 페이스 · 거리 변화를 AI가 피드백하고,<br>북마크 · 직접 그리기 · GPX로 내 코스를 관리합니다.</p></div></div>
+      <div class="pill p4"><div class="n">4</div><div><h4><span>커뮤니티</span> &amp; 배지</h4><p>코스 · 기록을 연결한 게시글, 댓글, 좋아요를 지원하고<br>배지와 출석 캘린더로 러닝 습관을 만듭니다.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 실행 화면 -->
+<section class="slide tall" id="s4">
+  <aside class="side">
+    <div class="num">04</div>
+    <h2>실행 화면</h2>
+    <p>실제 구현된 화면으로<br>추천 → 러닝 → 기록 → 공유<br>흐름을 확인할 수 있습니다.</p>
+    <div class="mascot"><img src="../../frontend/public/runner.png" alt=""></div>
+    <div class="tagline">Live Demo<small>Web · Android 동일 UI</small></div>
+  </aside>
+  <div class="main">
+    <div class="header"><span class="logo"><i></i>RunQuest</span><span class="chip">04. 실행 화면</span><span class="page">04 / 04</span></div>
+    <h1 class="title">RunQuest <em>서비스 화면</em></h1>
+    <div class="screens">
+      <div class="shot c-blue"><div class="phone"><img src="../../실행화면/메인페이지.png" alt=""></div><h5>메인</h5><p>오늘의 날씨 · 요약<br>추천 코스 미리보기</p></div>
+      <div class="shot c-green"><div class="phone"><img src="../../실행화면/AI 추천 페이지.png" alt=""></div><h5>AI 코스 추천</h5><p>상태별 맞춤 코스와<br>추천 이유 제공</p></div>
+      <div class="shot c-sky"><div class="phone"><img src="../../실행화면/AI 챗봇 추천.png" alt=""></div><h5>AI 챗봇</h5><p>자연어 조건으로<br>대화형 코스 추천</p></div>
+      <div class="shot c-blue"><div class="phone"><img src="../../실행화면/러닝 기록 중.png" alt=""></div><h5>GPS 러닝</h5><p>실시간 경로 · 거리<br>페이스 측정</p></div>
+      <div class="shot c-green"><div class="phone"><img src="../../실행화면/기록 저장 및 러닝 피드백.jpg" alt=""></div><h5>기록 · 피드백</h5><p>러닝 결과 저장과<br>AI 피드백</p></div>
+      <div class="shot c-amber"><div class="phone"><img src="../../실행화면/커뮤니티.png" alt=""></div><h5>커뮤니티</h5><p>코스 · 기록 연동<br>게시글과 댓글</p></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const id = location.hash.slice(1);
+  if (id) document.getElementById(id).classList.add('active');
+  else document.body.dataset.show = 'all';
+</script>
+</body>
+</html>
