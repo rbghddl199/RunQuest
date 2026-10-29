@@ -1,10 +1,30 @@
 # 🏃 RunQuest — AI 기반 맞춤형 러닝 코스 추천 서비스
 
+> **어디서, 얼마나 달려야 할지 고민하는 사용자를 위해 AI가 먼저 코스를 제안합니다.**
+> 사용자의 취향과 러닝 기록을 분석해 개인에게 맞는 산책 · 러닝 코스를 추천하는 서비스입니다.
+
+| 항목 | 내용 |
+|---|---|
+| 개발 기간 | 2026.05 ~ 2026.06 |
+| 프로젝트 유형 | 팀 프로젝트 |
+| 담당 역할 | Backend 개발 및 데이터 관리 |
+| 주요 기능 | 맞춤형 코스 추천 · GPS 러닝 기록 · 커뮤니티 |
+| 주요 기술 | Vue 3 · Django REST Framework · GPT API · Kakao Maps |
+| 플랫폼 | Web / Android 시연용 앱 |
+
+## 01. 프로젝트 소개
+
 ![프로젝트 소개](docs/readme/01-intro.png)
+
+## 02. 배경 및 문제점
 
 ![배경 및 문제점](docs/readme/02-background.png)
 
+## 03. 주요 기능
+
 ![주요 기능](docs/readme/03-features.png)
+
+## 04. 실행 화면
 
 ![실행 화면](docs/readme/04-screens.png)
 
